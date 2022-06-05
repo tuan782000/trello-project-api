@@ -22,8 +22,8 @@ const createNew = async (data) => {
     const result = await getDB().collection(boardCollectionName).insertOne(value)
     return result.ops[0]
   } catch (error) {
-    console.log(error)
+    throw new Error(error)
   }
 }
 
-export const BoardModel = {createNew}
+export const BoardModel = { createNew }

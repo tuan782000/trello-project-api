@@ -27,4 +27,4 @@ const createNew = async (data) => {
   }
 }
 
-export const ColumnModel = {createNew}
+export const ColumnModel = { createNew }
