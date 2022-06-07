@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import {ObjectID} from 'mongodb'
+import { ObjectID } from 'mongodb'
 import { getDB } from '*/config/mongodb'
 
 // define Card collection
@@ -25,7 +25,7 @@ const createNew = async (data) => {
     const insertValue = {
       ...validatedValue,
       boardId: ObjectID(validatedValue.boardId),
-      columnId: ObjectID(validatedValue.columnId),
+      columnId: ObjectID(validatedValue.columnId)
     }
     const result = await getDB().collection(cardCollectionName).insertOne(insertValue)
     return result.ops[0]
@@ -33,8 +33,26 @@ const createNew = async (data) => {
     throw new Error(error)
   }
 }
+/**
+ *
+ * @param {Array of string card id} ids
+ */
+const deleteMany = async(ids) => {
+  try {
+    const transformIds = ids.map(i => ObjectID(i))
+    const result = await getDB().collection(cardCollectionName).updateMany(
+      { _id: { $in: transformIds } },
+      { $set: { _destroy: true } }
+    )
 
-export const CardModel = { 
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export const CardModel = {
   cardCollectionName,
-  createNew
+  createNew,
+  deleteMany
 }
