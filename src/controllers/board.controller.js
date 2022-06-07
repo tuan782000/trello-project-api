@@ -5,7 +5,6 @@ import { BoardService } from '*/services/board.service'
 const createNew = async (req, res) => {
   try {
     const result = await BoardService.createNew(req.body)
-    console.log(result)
     res.status(HttpStatusCode.OK).json(result)
   } catch (error) {
     res.status(HttpStatusCode).INTERNAL_SERVER.json({
@@ -18,7 +17,6 @@ const getFullBoard = async (req, res) => {
   try {
     const { id } = req.params
     const result = await BoardService.getFullBoard(id)
-    console.log(result)
     res.status(HttpStatusCode.OK).json(result)
   } catch (error) {
     res.status(HttpStatusCode).INTERNAL_SERVER.json({
@@ -26,7 +24,7 @@ const getFullBoard = async (req, res) => {
     })
   }
 }
-export const BoardController = { 
+export const BoardController = {
   createNew,
   getFullBoard
 }
